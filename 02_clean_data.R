@@ -1,4 +1,5 @@
 library("tidyverse")
+library("geosphere") #For distance calculations
 
 #
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")
@@ -20,7 +21,7 @@ clean_data <- load_data %>%
 #---------------------------------------------------------------------------------- 
 #                   Add location variable for each venue
 #---------------------------------------------------------------------------------- 
-venue.location <- data.frame("Venue"=unique(clean.AFL$Venue)) %>% 
+venue_location <- data.frame("Venue"=unique(clean_data$Venue)) %>% 
   mutate(Location=case_when(
     Venue=="Football Park" ~"adelaide",
     Venue=="Adelaide Oval" ~"adelaide",
@@ -71,7 +72,9 @@ venue.location <- data.frame("Venue"=unique(clean.AFL$Venue)) %>%
     Venue=="Sydney Showground" ~"sydney",
     Venue=="Wellington" ~"wellington"
   ))
-city.coordinates <-  as.data.frame(rbind(
+
+
+city_coordinates <-  as.data.frame(rbind(
   c("melbourne",-37.81,144.96),
   c("geelong", -38.15, 144.36),
   c("sydney", -33.87, 151.21),
@@ -90,7 +93,147 @@ city.coordinates <-  as.data.frame(rbind(
   c("wellington",-41.3, 174.77),
   c("townsville", -19.26, 146.81))) %>% 
   rename(Location=V1, Location.Lat=V2, Location.Lon=V3)
-venue.location <- left_join(venue.location, city.coordinates, by="Location")
-clean.AFL <- left_join(clean.AFL, venue.location,by="Venue") 
-clean.AFL <- clean.AFL %>% rename(Venue.Location=Location, Venue.Lat=Location.Lat, Venue.Lon=Location.Lon) %>% 
+
+venue_location <- left_join(venue_location, city_coordinates, by="Location")
+
+
+
+clean_data<- left_join(clean_data, venue_location,by="Venue") 
+
+clean_data <- clean_data %>% rename(Venue.Location=Location, Venue.Lat=Location.Lat, Venue.Lon=Location.Lon) %>% 
   mutate(Venue.Lat=as.numeric(Venue.Lat),Venue.Lon=as.numeric(Venue.Lon))
+
+#---------------------------------------------------------------------------------- 
+#                   Add location variable for each home and away team
+#---------------------------------------------------------------------------------- 
+team_location = data.frame("Team" = unique(clean_data$Home.Team)) %>%
+  mutate(Location = case_when(
+    Team == "West Coast" | Team == "Fremantle" ~ "perth",
+    Team == "Adelaide" |
+      Team == "Port Adelaide" ~ "adelaide",
+    Team == "Sydney" | Team == "GWS" ~ "sydney",
+    Team == "Brisbane Lions" ~ "brisbane",
+    Team == "Gold Coast" ~ "gold coast",
+    Team == "Geelong" ~ "geelong",
+    Team == "Carlton" |
+      Team == "Essendon" |
+      Team == "North Melbourne" |
+      Team ==  "University" |
+      Team == "Western Bulldogs" |
+      Team == "Richmond" |
+      Team == "Fitzroy" |
+      Team == "Melbourne" |
+      Team == "St Kilda" |
+      Team == "Hawthorn" | Team == "Collingwood" ~ "melbourne"
+  )
+  )
+team_location=left_join(team_location,city_coordinates,by="Location")
+
+# Add home teams
+clean_data <- merge(clean_data, team_location,by.x="Home.Team",by.y="Team")
+clean_data <- clean_data %>% rename(Home.Location=Location, Home.Lat=Location.Lat, Home.Lon=Location.Lon)
+clean_data <- clean_data %>% mutate(Home.Location=ifelse(Home.Team=="Sydney"&Season<1982,"melbourne",Home.Location))
+clean_data <- clean_data %>% mutate(Home.Lat=ifelse(Home.Team=="Sydney"&Season<1982,-37.81,as.numeric(Home.Lat)))
+clean_data <- clean_data %>% mutate(Home.Lon=ifelse(Home.Team=="Sydney"&Season<1982,144.96,as.numeric(Home.Lon)))
+
+# Add away teams
+clean_data <- merge(clean_data, team_location,by.x="Away.Team",by.y="Team")
+clean_data <- clean_data %>% rename(Away.Location=Location, Away.Lat=Location.Lat, Away.Lon=Location.Lon)
+clean_data <- clean_data %>% mutate(Away.Location=ifelse(Away.Team=="Sydney"&Season<1982,"melbourne",Away.Location))
+clean_data <- clean_data %>% mutate(Away.Lat=ifelse(Away.Team=="Sydney"&Season<1982,-37.81,as.numeric(Away.Lat)))
+clean_data <- clean_data %>% mutate(Away.Lon=ifelse(Away.Team=="Sydney"&Season<1982,144.96,as.numeric(Away.Lon)))
+
+
+#---------------------------------------------------------------------------------- 
+#                   Add distance travelled and distance differentials
+#---------------------------------------------------------------------------------- 
+#Use the geosphere package to estimate the distance travelled by home team
+for (i in 1:nrow(clean_data)) {
+  a<-clean_data$Home.Lon[i]
+  b<-clean_data$Home.Lat[i]
+  c<-clean_data$Venue.Lon[i]
+  d<-clean_data$Venue.Lat[i]
+  clean_data$Home.Travel.Distance[i]<-distm(c(a,b),c(c,d), fun = distHaversine)
+}
+
+#Use the geosphere package to estimate the distance travelled by away team
+for (i in 1:nrow(clean_data)) {
+  a<-clean_data$Away.Lon[i]
+  b<-clean_data$Away.Lat[i]
+  c<-clean_data$Venue.Lon[i]
+  d<-clean_data$Venue.Lat[i]
+  clean_data$Away.Travel.Distance[i]<-distm(c(a,b),c(c,d), fun = distHaversine)
+}
+
+clean_data <-  clean_data %>% 
+  mutate(Distance.Diff=Away.Travel.Distance-Home.Travel.Distance)
+
+#---------------------------------------------------------------------------------- 
+#                   Add venue experience
+#---------------------------------------------------------------------------------- 
+#Calculate number of games played at venue in previous x seasons#
+#Dataframe should look like # Team, Season, Venue, Games Played Previous Two Season
+#Create dataframe where it has Season, Team, Opponent, Venue
+afl_home <- clean_data %>% rename(Team=Home.Team, Opponent=Away.Team)
+afl_away <- clean_data %>% rename(Team=Away.Team, Opponent=Home.Team)
+afl_long <- rbind(afl_home, afl_away) %>% 
+  arrange(Season) %>% 
+  select(Season, Team, Opponent, Venue)
+rm(afl_home, afl_away)
+
+#Count games played by each team each season at each venue
+venue_experience_count <- afl_long %>%
+  group_by(Team, Season, Venue) %>% 
+  summarise(Games.Played=n())
+
+#Add dataframe that has each team, each ground and each season
+team_season_venue_experience <- expand_grid("Venue" = unique(venue_location$Venue), 
+                  "Team" = unique(clean_data$Home.Team),
+                  "Season" = unique(clean_data$Season)) %>% 
+  left_join(venue_experience_count, by = c("Team", "Season", "Venue")) %>% 
+  mutate(Games.Played = ifelse(is.na(Games.Played), 0, Games.Played))
+
+
+#Add # of games played last 1,2,3,4,5 seasons
+venue_experience_final <- team_season_venue_experience  %>% 
+  group_by(Team, Venue) %>% 
+  mutate(Games.Played.lag1=dplyr::lag(Games.Played,1,order_by = Season),
+         Games.Played.lag2=dplyr::lag(Games.Played,2,order_by = Season),
+         Games.Played.lag3=dplyr::lag(Games.Played,3,order_by = Season),
+         Games.Played.lag4=dplyr::lag(Games.Played,4,order_by = Season),
+         Games.Played.lag5=dplyr::lag(Games.Played,5,order_by = Season),
+         Venue.Experience.Last2=Games.Played.lag1+Games.Played.lag2,
+         Venue.Experience.Last3=Games.Played.lag1+Games.Played.lag2+Games.Played.lag3,
+         Venue.Experience.Last4=Games.Played.lag1+Games.Played.lag2+Games.Played.lag3+Games.Played.lag4,
+         Venue.Experience.Last5=Games.Played.lag1+Games.Played.lag2+Games.Played.lag3+Games.Played.lag4+Games.Played.lag5
+  ) %>% 
+  ungroup() %>% 
+  select(Season, Team, Venue,  Venue.Experience.Last2,  Venue.Experience.Last3,  Venue.Experience.Last4,  Venue.Experience.Last5) 
+
+venue_experience_final[is.na(venue_experience_final)] <-  0
+
+#Merge back into clean AFL dataframe for home teams
+clean_data <- merge(clean_data, venue_experience_final, by.x=c("Home.Team","Venue","Season"),by.y=c("Team","Venue","Season"), all=FALSE)
+clean_data <- clean_data %>% rename(Home.Venue.Experience.Last2=Venue.Experience.Last2,
+                                  Home.Venue.Experience.Last3=Venue.Experience.Last3,
+                                  Home.Venue.Experience.Last4=Venue.Experience.Last4,
+                                  Home.Venue.Experience.Last5=Venue.Experience.Last5)
+#Merge back into clean AFL dataframe for away teams
+clean_data <- merge(clean_data, venue_experience_final, by.x=c("Away.Team","Venue","Season"),by.y=c("Team","Venue","Season"), all=FALSE)
+clean_data <- clean_data %>% rename(Away.Venue.Experience.Last2=Venue.Experience.Last2,
+                                  Away.Venue.Experience.Last3=Venue.Experience.Last3,
+                                  Away.Venue.Experience.Last4=Venue.Experience.Last4,
+                                  Away.Venue.Experience.Last5=Venue.Experience.Last5)
+
+clean_data <- clean_data %>% 
+  mutate(Relative.Ground.Experience2=Home.Venue.Experience.Last2-Away.Venue.Experience.Last2,
+         Relative.Ground.Experience3=Home.Venue.Experience.Last3-Away.Venue.Experience.Last3,
+         Relative.Ground.Experience4=Home.Venue.Experience.Last4-Away.Venue.Experience.Last4,
+         Relative.Ground.Experience5=Home.Venue.Experience.Last4-Away.Venue.Experience.Last5) %>% 
+  select(Season, Round, Round.Number, Venue,Home.Team, Away.Team, Margin, Home.Goals, Home.Behinds, Home.Points, Away.Goals, Away.Behinds, Away.Points,
+         Distance.Diff, Relative.Ground.Experience3,Relative.Ground.Experience5, Round.Type, Match.Identifier, Round.Identifier, Date, Start.Season
+  ) %>% 
+  arrange(Season, Round.Number)
+
+
+
