@@ -8,4 +8,4 @@ for (season in 1897:2021){
   temp_df[[season]] <-download 
 }
 load_data <- do.call(rbind, temp_df)
-save(load_data, file = "/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.rda")
+write_csv(load_data, file = "/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")

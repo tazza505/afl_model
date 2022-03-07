@@ -1,8 +1,7 @@
 library("tidyverse")
 
 #
-load_data <- load("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.rda")
-
+load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")
 
 
 clean_data <- load_data %>% 
