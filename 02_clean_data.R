@@ -1,5 +1,6 @@
 library("tidyverse")
 library("geosphere") #For distance calculations
+library("elo")
 
 #
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")
@@ -235,5 +236,42 @@ clean_data <- clean_data %>%
   ) %>% 
   arrange(Season, Round.Number)
 
+#---------------------------------------------------------------------------------- 
+#                   Add simple ELO with no home ground advantage
+#---------------------------------------------------------------------------------- 
+source("functions/elo_functions.R")
 
+elo_model <- elo.run(
+  margin_to_elo(margin = Home.Points - Away.Points)~
+    Home.Team +
+    Away.Team +
+    group(Round.Identifier)+
+    regress(Start.Season, 1500, 0.05),
+  k = 80,
+  data = clean_data
+)
+
+elo_df <- as.data.frame(elo_model) %>%
+  cbind(clean_data) %>% 
+  mutate(margin.actual=Home.Points-Away.Points,
+         p.B=1-p.A,
+         Home.Win=ifelse(margin.actual>0,TRUE,FALSE),
+         elo.A.prior=elo.A-update.A,
+         elo.B.prior=elo.B-update.B,
+         margin.model = as.numeric(lapply(elo_df$p.A,elo_to_margin)),
+         error=margin.model-margin.actual,
+         error.sqr = error^2,
+         a.win=ifelse(margin.actual>0,1,0),
+         correct.winner = ifelse(margin.model>0&margin.actual>0|margin.model<0&margin.actual<0, 1,0),
+         elo.difference=elo.A.prior-elo.B.prior) %>%
+  rename(elo.A.post = elo.A,
+         elo.B.post = elo.B) %>% 
+  arrange(Season, Round.Number) %>% 
+  select(Match.Identifier, elo.A.prior, elo.B.prior) %>% 
+  rename(Home.Strength=elo.A.prior, Away.Strength=elo.B.prior)
+
+#Add elo to clean data dataframe and save as final
+final_data <- left_join(clean_data, elo_df, by = "Match.Identifier") %>% 
+  mutate(outcome = ifelse(Margin>0, "win", "loss")) %>% 
+  filter(season>=2000)
 
