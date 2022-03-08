@@ -1,6 +1,7 @@
 library("tidyverse")
 library("geosphere") #For distance calculations
 library("elo")
+source("functions/elo_functions.R")
 
 #
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")
@@ -239,7 +240,6 @@ clean_data <- clean_data %>%
 #---------------------------------------------------------------------------------- 
 #                   Add simple ELO with no home ground advantage
 #---------------------------------------------------------------------------------- 
-source("functions/elo_functions.R")
 
 elo_model <- elo.run(
   margin_to_elo(margin = Home.Points - Away.Points)~
@@ -251,7 +251,9 @@ elo_model <- elo.run(
   data = clean_data
 )
 
-elo_df <- as.data.frame(elo_model) %>%
+elo_df <- as.data.frame(elo_model)
+
+elo_df <- elo_df%>%
   cbind(clean_data) %>% 
   mutate(margin.actual=Home.Points-Away.Points,
          p.B=1-p.A,
@@ -272,6 +274,32 @@ elo_df <- as.data.frame(elo_model) %>%
 
 #Add elo to clean data dataframe and save as final
 final_data <- left_join(clean_data, elo_df, by = "Match.Identifier") %>% 
-  mutate(outcome = ifelse(Margin>0, "win", "loss")) %>% 
-  filter(season>=2000)
+  mutate(outcome = ifelse(Margin>0, "win", "loss")) %>%
+  mutate(outcome = ifelse(Margin == 0, "draw", outcome)) %>% 
+  filter(Season>=2000) %>% 
+  rename(season = Season,
+         round = Round,
+         round_number = Round.Number,
+         venue = Venue,
+         home_team = Home.Team,
+         away_team = Away.Team,
+         margin = Margin,
+         home_goals= Home.Goals,
+         home_behinds= Home.Behinds,
+         home_points = Home.Points,
+         away_goals= Away.Goals,
+         away_behinds= Away.Behinds,
+         away_points = Away.Points,
+         distance_diff = Distance.Diff,
+         venue_exp_last_3 = Relative.Ground.Experience3,
+         venue_exp_last_5 = Relative.Ground.Experience5,
+         round_type = Round.Type,
+         match_id = Match.Identifier,
+         round_id = Round.Identifier,
+         date = Date,
+         start_season_id = Start.Season,
+         home_elo = Home.Strength,
+         away_elo = Away.Strength
+         )
 
+write.csv(final_data, "/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv")
