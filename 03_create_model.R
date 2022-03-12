@@ -1,11 +1,11 @@
 library(tidyverse)
 source("functions/elo_functions.R")
 
-# Script to predict winner of each game
+# Script to create tipping model
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv") %>% 
   filter(round_type == "Regular") %>% 
   select(-X1) %>% 
-  mutate(id = 1:nrow(load_data)) %>% 
+  mutate(id = 1:nrow(.)) %>% 
   mutate(outcome = ifelse(outcome == "win", 1, 0)) %>%  #Code draws as wins for the home team
   mutate(elo_diff = home_elo - away_elo,
          distance_diff_log = log(distance_diff+1)) 
@@ -65,3 +65,8 @@ test <- test %>%
   mutate(prediction_success = ifelse(prediction_outcome==outcome, 1, 0))
 
 print(paste("The test data is successful",mean(100*test$prediction_success, na.rm = T), " % of the time"))
+
+model_coefficients <- coef(model_1) %>% 
+  as.data.frame()
+write.csv(model_coefficients,"/Users/tazza1/Documents/r_projects/afl_model/data/model_coefficents.csv")
+
