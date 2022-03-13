@@ -95,7 +95,7 @@ venue_location <- left_join(venue_location, city_coordinates, by="Location") %>%
 #---------------------------------------------------------------------------------- 
 #                   Add location variable for each home and away team
 #---------------------------------------------------------------------------------- 
-teams <- c('Fitzroy', 'Collingwood', 'Geelong', 'Sydney', 'Essendon', 'St Kilda', 'Melbourne', 'Carlton', 'Richmond', 'University', 'Hawthorn', 'North Melbourne', 'Footscray', 'West Coast', 'Brisbane Lions', 'Adelaide', 'Fremantle', 'Port Adelaide', 'Gold Coast', 'GWS')
+teams <- c('Fitzroy', 'Collingwood', 'Geelong', 'Sydney', 'Essendon', 'St Kilda', 'Melbourne', 'Carlton', 'Richmond', 'University', 'Hawthorn', 'North Melbourne', 'Western Bulldogs', 'West Coast', 'Brisbane Lions', 'Adelaide', 'Fremantle', 'Port Adelaide', 'Gold Coast', 'GWS')
 
 
 team_location = data.frame("Team" = teams) %>%
