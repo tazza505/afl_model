@@ -21,6 +21,14 @@ margin_to_differential <- function(margin){
   (elo.prob.to.differential(margin.to.elo(margin)))
 }
   
+#function to convert logistic output to probability 
+logit2prob <- function(logit){
+  odds <- exp(logit)
+  prob <- odds / (1 + odds)
+  return(prob)
+}
+
+
 
 #---------------------------------------------------------------------------------- 
 #       Create ELO dataframes
