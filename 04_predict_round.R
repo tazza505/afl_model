@@ -3,9 +3,20 @@ library(tidyverse)
 library(fitzRoy)
 library(janitor)
 source("/Users/tazza1/Documents/r_projects/afl_model/functions/distance_travelled_function.R")
+source("/Users/tazza1/Documents/r_projects/afl_model/functions/elo_functions.R")
 
 #Get the model coefficients
 model_coef <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/model_coefficents.csv") 
+
+coeff_intercept <- model_coef[1,2]
+coeff_elo_diff <- model_coef[2,2]
+coeff_distance_diff_log <- model_coef[3,2]
+coeff_venue_exp_last_3 <- model_coef[4,2]
+
+#Load in venue experience data
+venue_experience <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/venue_experience.csv") %>% 
+  filter(Season == max(Season)) %>% 
+  select(Season, Team, Venue, Venue.Experience.Last3)
 
 #Get the latest elo by team
 latest_elo <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv") %>% 
@@ -18,7 +29,10 @@ latest_elo <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_cl
   rename(team = value) %>% 
   mutate(row_id = row_number()) %>% 
   group_by(team) %>% 
-  top_n(1) 
+  top_n(1) %>% 
+  select(team, elo)
+
+write.csv("/Users/tazza1/Documents/r_projects/afl_model/data/latest_elo.csv")
 
 #Load in the fixture
 load_fixture <-fetch_fixture_afl(2022) 
@@ -90,7 +104,45 @@ clean_fixture <- load_fixture %>%
   ) %>%  #Calculate distance differential between teams
   mutate(distance_diff = mapply(calculate_distance, home_team, away_team, venue)) %>%
   mutate(distance_diff_log = log(distance_diff+1)) %>% 
-  mutate(next_round = ifelse(round_round_number == min(round_round_number), 1, 0))
+  mutate(distance_diff_log = ifelse(is.na(distance_diff_log), 0, distance_diff_log)) %>% 
+  mutate(next_round = ifelse(round_round_number == min(round_round_number), 1, 0)) %>% 
+  left_join(venue_experience, by = c("home_team" = "Team", "venue" = "Venue")) %>% 
+  rename(Venue.Experience.Last3.Home = Venue.Experience.Last3) %>% 
+  left_join(venue_experience, by = c("away_team" = "Team", "venue" = "Venue")) %>% 
+  rename(Venue.Experience.Last3.Away = Venue.Experience.Last3) %>% 
+  mutate(venue_exp_last_3 = Venue.Experience.Last3.Home -  Venue.Experience.Last3.Away)
+
+
+
+#Next round data
+
+next_round <- clean_fixture %>% 
+  filter(next_round == 1) %>% 
+  select(comp_season_year, round_round_number, home_team, away_team, venue, distance_diff_log, venue_exp_last_3) %>%
+  rename(season = comp_season_year, round = round_round_number) %>% 
+  left_join(latest_elo, by = c("home_team" = "team")) %>% 
+  rename(home_elo = elo) %>% 
+  left_join(latest_elo, by = c("away_team" = "team")) %>% 
+  rename(away_elo = elo) %>% 
+  mutate(elo_diff = home_elo - away_elo) %>% 
+  mutate(prediction_logit = coeff_intercept + 
+           coeff_elo_diff*elo_diff+
+           coeff_venue_exp_last_3*venue_exp_last_3+
+           coeff_distance_diff_log*distance_diff_log) %>% 
+  mutate(prediction_odds = as.numeric(lapply(prediction_logit, logit2prob))) %>% 
+  mutate(prediction_outcome = ifelse(prediction_odds>0.5, 1, 0))
+
+next_round_tip <- next_round %>% 
+  select(season, round, home_team, away_team, venue, prediction_odds, prediction_outcome) %>% 
+  mutate(tip = ifelse(prediction_outcome == 1, home_team, away_team)) %>%
+  mutate(prob = ifelse(prediction_odds>0.5, round(prediction_odds*100,1), round(100*(1-prediction_odds),1))) %>% 
+  mutate(betting_implied = paste0("$",round(1/(prob/100),2)))
+  
+round <- max(next_round_tip$round)
+season <- max(next_round_tip$season)
+
+write.csv(next_round_tip, paste0("/Users/tazza1/Documents/r_projects/afl_model/predictions/", season, "_round",round,".csv"))
+
 
 
   
