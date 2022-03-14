@@ -4,10 +4,26 @@ library(fitzRoy)
 library(janitor)
 source("/Users/tazza1/Documents/r_projects/afl_model/functions/distance_travelled_function.R")
 
-latest_elo <- ""
+#Get the model coefficients
+model_coef <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/model_coefficents.csv") 
 
+#Get the latest elo by team
+latest_elo <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv") %>% 
+  select(X, season, round, round_number, home_team, away_team, venue_exp_last_3, home_elo, away_elo) %>% 
+  pivot_longer(cols = c(home_team, away_team), names_to = "team") %>% 
+  mutate(home_elo = ifelse(team == "home_team", home_elo, 0)) %>% 
+  mutate(away_elo = ifelse(team == "away_team", away_elo, 0)) %>% 
+  mutate(elo = home_elo + away_elo) %>% 
+  select(-c(team, home_elo, away_elo)) %>% 
+  rename(team = value) %>% 
+  mutate(row_id = row_number()) %>% 
+  group_by(team) %>% 
+  top_n(1) 
+
+#Load in the fixture
 load_fixture <-fetch_fixture_afl(2022) 
 
+#Fix venue and team names to match historical data
 clean_fixture <- load_fixture %>% 
   filter(status == "SCHEDULED") %>% 
   janitor::clean_names() %>% 
@@ -71,23 +87,10 @@ clean_fixture <- load_fixture %>%
       away_team_name ==  "Richmond"  ~ "Richmond",
       away_team_name ==  "Fremantle"  ~ "Fremantle"
     )
-  ) %>% 
-  mutate(distance_diff = mapply(calculate_distance, home_team, away_team, venue))
+  ) %>%  #Calculate distance differential between teams
+  mutate(distance_diff = mapply(calculate_distance, home_team, away_team, venue)) %>%
+  mutate(distance_diff_log = log(distance_diff+1)) %>% 
+  mutate(next_round = ifelse(round_round_number == min(round_round_number), 1, 0))
 
-for (i in 1:nrow(clean_fixture)){
-  calculate_distance(clean_fixture$home_team[i],
-                     clean_fixture$away_team[i],
-                     clean_fixture$venue[i]
-                     )
-}
 
-  
-calculate_distance(clean_fixture$home_team[6],
-                   clean_fixture$away_team[6],
-                   clean_fixture$venue[6]
-)
-  
-
-# season round round_number venue home_team away_team distance_diff venue_exp_last_3 venue_exp_last_5
-# home_elo away_elo
   
