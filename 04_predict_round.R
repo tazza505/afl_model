@@ -141,7 +141,7 @@ next_round_tip <- next_round %>%
 round <- max(next_round_tip$round)
 season <- max(next_round_tip$season)
 
-write.csv(next_round_tip, paste0("/Users/tazza1/Documents/r_projects/afl_model/predictions/", season, "_round",round,".csv"))
+write.csv(next_round_tip, paste0("/Users/tazza1/Documents/r_projects/afl_model/predictions/", season, "_round_",round,".csv"))
 
 
 
