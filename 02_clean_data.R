@@ -214,6 +214,8 @@ venue_experience_final <- team_season_venue_experience  %>%
 
 venue_experience_final[is.na(venue_experience_final)] <-  0
 
+write.csv(venue_experience_final, "/Users/tazza1/Documents/r_projects/afl_model/data/venue_experience.csv")
+
 #Merge back into clean AFL dataframe for home teams
 clean_data <- merge(clean_data, venue_experience_final, by.x=c("Home.Team","Venue","Season"),by.y=c("Team","Venue","Season"), all=FALSE)
 clean_data <- clean_data %>% rename(Home.Venue.Experience.Last2=Venue.Experience.Last2,
