@@ -32,7 +32,7 @@ latest_elo <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_cl
   top_n(1) %>% 
   select(team, elo)
 
-write.csv("/Users/tazza1/Documents/r_projects/afl_model/data/latest_elo.csv")
+write_csv(latest_elo, "/Users/tazza1/Documents/r_projects/afl_model/data/latest_elo.csv")
 
 #Load in the fixture
 load_fixture <-fetch_fixture_afl(2022) 
