@@ -1,0 +1,10 @@
+game,date,round,home_team,home_goals,home_behinds,home_points,away_team,away_goals,away_behinds,away_points,venue,margin,season,round_type,round_number,match_id,actual_winner,actual_margin,prediction_odds,prediction_outcome,tip,prob,betting_implied,correct_tip
+15984,2022-03-16,1,Melbourne,14,13,97,Western Bulldogs,11,5,71,M.C.G.,26,2022,Regular,1,R1-Melbourne-Western Bulldogs,Melbourne,26,0.587405249433582,1,Melbourne,58.7,$1.7,1
+15985,2022-03-17,1,Carlton,14,17,101,Richmond,11,10,76,M.C.G.,25,2022,Regular,1,R1-Carlton-Richmond,Carlton,25,0.366451118421083,0,Richmond,63.4,$1.58,0
+15986,2022-03-18,1,St Kilda,12,13,85,Collingwood,15,12,102,Docklands,-17,2022,Regular,1,R1-St Kilda-Collingwood,Collingwood,-17,0.679308610512484,1,St Kilda,67.9,$1.47,0
+15987,2022-03-19,1,Geelong,20,18,138,Essendon,11,6,72,M.C.G.,66,2022,Regular,1,R1-Geelong-Essendon,Geelong,66,0.572880399166563,1,Geelong,57.3,$1.75,1
+15988,2022-03-19,1,GWS,13,14,92,Sydney,17,10,112,Stadium Australia,-20,2022,Regular,1,R1-GWS-Sydney,Sydney,-20,0.453709475558886,0,Sydney,54.6,$1.83,1
+15989,2022-03-19,1,Brisbane Lions,11,14,80,Port Adelaide,10,9,69,Gabba,11,2022,Regular,1,R1-Brisbane Lions-Port Adelaide,Brisbane Lions,11,0.594162124380652,1,Brisbane Lions,59.4,$1.68,1
+15990,2022-03-20,1,Hawthorn,11,12,78,North Melbourne,8,10,58,M.C.G.,20,2022,Regular,1,R1-Hawthorn-North Melbourne,Hawthorn,20,0.656042512896873,1,Hawthorn,65.6,$1.52,1
+15991,2022-03-20,1,Adelaide,12,10,82,Fremantle,11,17,83,Adelaide Oval,-1,2022,Regular,1,R1-Adelaide-Fremantle,Fremantle,-1,0.513319520199166,1,Adelaide,51.3,$1.95,0
+15992,2022-03-20,1,West Coast,12,8,80,Gold Coast,16,11,107,Perth Stadium,-27,2022,Regular,1,R1-West Coast-Gold Coast,Gold Coast,-27,0.722307472655307,1,West Coast,72.2,$1.39,0
