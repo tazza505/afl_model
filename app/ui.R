@@ -1,4 +1,9 @@
 require(shiny)
+require(tidyverse)
+
+load_latest_round_tips <- read_csv("https://raw.githubusercontent.com/tazza505/afl_model/main/predictions/2022_round_2.csv")
+latest_round <- load_latest_round_tips[2,"round"]
+latest_season <- load_latest_round_tips[2,"season"]
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(

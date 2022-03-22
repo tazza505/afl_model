@@ -5,9 +5,9 @@ account: tazza505
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5844707
-bundleId: 5679334
+bundleId: 5679358
 url: https://tazza505.shinyapps.io/afl_tipping/
-when: 1647225984.01624
-lastSyncTime: 1647225984.01626
+when: 1647226602.57734
+lastSyncTime: 1647226602.57736
 asMultiple: FALSE
 asStatic: FALSE
