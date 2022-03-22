@@ -38,6 +38,7 @@ load_2022 <- fetch_results(2022) %>%
     Venue == "MCG"   ~  "M.C.G.",
     Venue == "Marvel Stadium"   ~  "Docklands",
     Venue == "Accor Stadium Australia" ~ "Stadium Australia",
+    Venue == "Accor Stadium" ~ "Stadium Australia",
     Venue == "Gabba" ~ "Gabba",
     Venue == "Adelaide Oval" ~ "Adelaide Oval",
     Venue == "Optus Stadium" ~ "Perth Stadium",
