@@ -1,7 +1,7 @@
 require(shiny)
 require(tidyverse)
 require(DT)
-
+require(plotly)
 
 
 
@@ -25,15 +25,32 @@ shinyServer(function(input, output) {
                 group_by(team) %>% 
                 top_n(1) %>% 
                 select(team, elo) %>% 
+                ungroup() %>% 
+                as.data.frame() %>% 
                 ggplot(aes(reorder(team, elo), elo))+
                 geom_point()+
                 coord_cartesian(ylim = c(1200, 1700))+
                 coord_flip()+
                 labs(title = "Latest ELO by team",
-                     x = "elo")
-
-
+                     x = "elo")+
+                theme_minimal()
         }
+        
+        
+        output$elo_team_round <- renderPlot(
+            
+            {
+                team_elo_round %>% 
+                    filter(team == "Melbourne")
+                    ggplot(aes(season, elo))+
+                    geom_line()+
+                    facet_wrap(~team)
+                
+            }
+        )
+        
+        
+        
     )
         
     }
