@@ -145,4 +145,5 @@ write.csv(next_round_tip, paste0("/Users/tazza1/Documents/r_projects/afl_model/p
 
 
 
+
   
