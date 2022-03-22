@@ -305,3 +305,17 @@ final_data <- left_join(clean_data, elo_df, by = "Match.Identifier") %>%
          )
 
 write.csv(final_data, "/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv")
+
+
+team_elo_round <- final_data %>% 
+  select(season, round, round_number, home_team, away_team, venue_exp_last_3, home_elo, away_elo) %>% 
+  pivot_longer(cols = c(home_team, away_team), names_to = "team") %>% 
+  mutate(home_elo = ifelse(team == "home_team", home_elo, 0)) %>% 
+  mutate(away_elo = ifelse(team == "away_team", away_elo, 0)) %>% 
+  mutate(elo = home_elo + away_elo) %>% 
+  select(-c(team, home_elo, away_elo, venue_exp_last_3, round)) %>% 
+  rename(team = value) 
+
+write.csv(team_elo_round, "/Users/tazza1/Documents/r_projects/afl_model/data/team_elo_round.csv")
+
+
