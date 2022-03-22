@@ -6,24 +6,6 @@ require(DT)
 
 
 
-
-#Find the most recent rounds tips
-# latest_prediction_file <- list.files("/Users/tazza1/Documents/r_projects/afl_model/predictions") %>% 
-#     as.data.frame() %>% 
-#     rename(file = ".") %>% 
-#     mutate(file = str_replace_all(file, ".csv", "_csv")) %>% 
-#     separate(file, sep ="_", into = c("season","round_type", "round_number", "csv")) %>% 
-#     mutate(round_number = as.numeric(round_number)) %>% 
-#     filter(round_number == max(round_number)) %>% 
-#     unite(file, sep = "_") %>% 
-#     mutate(file = str_replace_all(file, "_csv", ".csv")) %>% 
-#     as.character()
-#     
-
-
-
-
-
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
@@ -33,7 +15,30 @@ shinyServer(function(input, output) {
         select(-c(X1, season, round, prediction_odds, prediction_outcome)) 
     }
     )
+        
+        
+    output$latest_elo_plot <- renderPlot(
+        {
+            
+            team_elo_round %>%  
+                mutate(row_id = row_number()) %>% 
+                group_by(team) %>% 
+                top_n(1) %>% 
+                select(team, elo) %>% 
+                ggplot(aes(reorder(team, elo), elo))+
+                geom_point()+
+                coord_cartesian(ylim = c(1200, 1700))+
+                coord_flip()+
+                labs(title = "Latest ELO by team",
+                     x = "elo")
+
+
+        }
+    )
+        
+    }
+    )
     
     
 
-})
+
