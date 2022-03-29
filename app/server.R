@@ -41,8 +41,8 @@ shinyServer(function(input, output) {
             
             {
                 team_elo_round %>% 
-                    filter(team == "Melbourne")
-                    ggplot(aes(season, elo))+
+                    filter(team == "Hawthorn") %>% 
+                    ggplot(aes(date, elo))+
                     geom_line()+
                     facet_wrap(~team)
                 
