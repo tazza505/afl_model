@@ -23,7 +23,6 @@ tips <- vroom(all_predictions) %>%
 
 final <- results %>% 
   left_join(tips, by = c("match_id", "round", "home_team", "away_team", "venue", "season")) %>% 
-  mutate(correct_tip = ifelse(actual_winner == tip, 1, 0)) %>% 
-  filter(season, round)
+  mutate(correct_tip = ifelse(actual_winner == tip, 1, 0)) 
 
 write_csv(final,"/Users/tazza1/Documents/r_projects/afl_model/data/tip_results.csv")

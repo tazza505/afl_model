@@ -8,3 +8,30 @@ game,date,round,home_team,home_goals,home_behinds,home_points,away_team,away_goa
 15990,2022-03-20,1,Hawthorn,11,12,78,North Melbourne,8,10,58,M.C.G.,20,2022,Regular,1,R1-Hawthorn-North Melbourne,Hawthorn,20,0.656042512896873,1,Hawthorn,65.6,$1.52,1
 15991,2022-03-20,1,Adelaide,12,10,82,Fremantle,11,17,83,Adelaide Oval,-1,2022,Regular,1,R1-Adelaide-Fremantle,Fremantle,-1,0.513319520199166,1,Adelaide,51.3,$1.95,0
 15992,2022-03-20,1,West Coast,12,8,80,Gold Coast,16,11,107,Perth Stadium,-27,2022,Regular,1,R1-West Coast-Gold Coast,Gold Coast,-27,0.722307472655307,1,West Coast,72.2,$1.39,0
+15993,2022-03-24,2,Western Bulldogs,13,12,90,Carlton,16,6,102,Docklands,-12,2022,Regular,2,R2-Western Bulldogs-Carlton,Carlton,-12,0.723766102255404,1,Western Bulldogs,72.4,$1.38,0
+15994,2022-03-25,2,Sydney,17,5,107,Geelong,10,17,77,S.C.G.,30,2022,Regular,2,R2-Sydney-Geelong,Sydney,30,0.593421492462964,1,Sydney,59.3,$1.69,1
+15995,2022-03-26,2,Collingwood,15,10,100,Adelaide,8,10,58,M.C.G.,42,2022,Regular,2,R2-Collingwood-Adelaide,Collingwood,42,0.632441171709388,1,Collingwood,63.2,$1.58,1
+15996,2022-03-26,2,Essendon,10,15,75,Brisbane Lions,15,7,97,Docklands,-22,2022,Regular,2,R2-Essendon-Brisbane Lions,Brisbane Lions,-22,0.526482304301358,1,Essendon,52.6,$1.9,0
+15997,2022-03-26,2,Port Adelaide,7,14,56,Hawthorn,19,6,120,Adelaide Oval,-64,2022,Regular,2,R2-Port Adelaide-Hawthorn,Hawthorn,-64,0.769937596190392,1,Port Adelaide,77,$1.3,0
+15998,2022-03-26,2,Gold Coast,10,9,69,Melbourne,12,10,82,Carrara,-13,2022,Regular,2,R2-Gold Coast-Melbourne,Melbourne,-13,0.229107041325092,0,Melbourne,77.1,$1.3,1
+15999,2022-03-27,2,North Melbourne,10,14,74,West Coast,8,11,59,Docklands,15,2022,Regular,2,R2-North Melbourne-West Coast,North Melbourne,15,0.550113392770914,1,North Melbourne,55,$1.82,1
+16000,2022-03-27,2,Richmond,16,13,109,GWS,10,13,73,M.C.G.,36,2022,Regular,2,R2-Richmond-GWS,Richmond,36,0.575025828032904,1,Richmond,57.5,$1.74,1
+16001,2022-03-27,2,Fremantle,8,7,55,St Kilda,9,11,65,Perth Stadium,-10,2022,Regular,2,R2-Fremantle-St Kilda,St Kilda,-10,0.443715363331454,0,St Kilda,55.6,$1.8,1
+16002,2022-03-31,3,Western Bulldogs,9,17,71,Sydney,9,6,60,Docklands,11,2022,Regular,3,R3-Western Bulldogs-Sydney,Western Bulldogs,11,0.616606578055289,1,Western Bulldogs,61.7,$1.62,1
+16003,2022-04-01,3,Melbourne,14,15,99,Essendon,10,10,70,M.C.G.,29,2022,Regular,3,R3-Melbourne-Essendon,Melbourne,29,0.753041612698549,1,Melbourne,75.3,$1.33,1
+16004,2022-04-01,3,Adelaide,15,6,96,Port Adelaide,13,14,92,Adelaide Oval,4,2022,Regular,3,R3-Adelaide-Port Adelaide,Adelaide,4,0.311914298439759,0,Port Adelaide,68.8,$1.45,0
+16005,2022-04-02,3,GWS,12,11,83,Gold Coast,8,9,57,Sydney Showground,26,2022,Regular,3,R3-GWS-Gold Coast,GWS,26,0.714699207647832,1,GWS,71.5,$1.4,1
+16006,2022-04-02,3,Collingwood,13,13,91,Geelong,16,8,104,M.C.G.,-13,2022,Regular,3,R3-Collingwood-Geelong,Geelong,-13,0.423350909972917,0,Geelong,57.7,$1.73,1
+16007,2022-04-02,3,Brisbane Lions,23,18,156,North Melbourne,7,6,48,Gabba,108,2022,Regular,3,R3-Brisbane Lions-North Melbourne,Brisbane Lions,108,0.854886458422471,1,Brisbane Lions,85.5,$1.17,1
+16008,2022-04-03,3,Carlton,11,8,74,Hawthorn,11,7,73,M.C.G.,1,2022,Regular,3,R3-Carlton-Hawthorn,Carlton,1,0.460986903413257,0,Hawthorn,53.9,$1.86,0
+16009,2022-04-03,3,St Kilda,18,9,117,Richmond,13,6,84,Docklands,33,2022,Regular,3,R3-St Kilda-Richmond,St Kilda,33,0.604004390635908,1,St Kilda,60.4,$1.66,1
+16010,2022-04-03,3,West Coast,7,5,47,Fremantle,15,12,102,Perth Stadium,-55,2022,Regular,3,R3-West Coast-Fremantle,Fremantle,-55,0.474344929970205,0,Fremantle,52.6,$1.9,1
+16011,2022-04-07,4,Port Adelaide,4,12,36,Melbourne,10,8,68,Adelaide Oval,-32,2022,Regular,4,R4-Port Adelaide-Melbourne,Melbourne,-32,0.409638733990967,0,Melbourne,59,$1.69,1
+16012,2022-04-08,4,Geelong,11,14,80,Brisbane Lions,11,4,70,Kardinia Park,10,2022,Regular,4,R4-Geelong-Brisbane Lions,Geelong,10,0.554627525191963,1,Geelong,55.5,$1.8,1
+16013,2022-04-09,4,Sydney,13,8,86,North Melbourne,12,3,75,S.C.G.,11,2022,Regular,4,R4-Sydney-North Melbourne,Sydney,11,0.839802605458599,1,Sydney,84,$1.19,1
+16014,2022-04-09,4,Collingwood,10,14,74,West Coast,14,3,87,Docklands,-13,2022,Regular,4,R4-Collingwood-West Coast,West Coast,-13,0.731005889315224,1,Collingwood,73.1,$1.37,0
+16015,2022-04-09,4,Richmond,15,9,99,Western Bulldogs,7,19,61,M.C.G.,38,2022,Regular,4,R4-Richmond-Western Bulldogs,Richmond,38,0.473331772418816,0,Western Bulldogs,52.7,$1.9,0
+16016,2022-04-09,4,Fremantle,13,10,88,GWS,8,6,54,Perth Stadium,34,2022,Regular,4,R4-Fremantle-GWS,Fremantle,34,0.607726894304943,1,Fremantle,60.8,$1.64,1
+16017,2022-04-10,4,Essendon,15,13,103,Adelaide,15,9,99,Docklands,4,2022,Regular,4,R4-Essendon-Adelaide,Essendon,4,0.723687348405518,1,Essendon,72.4,$1.38,1
+16018,2022-04-10,4,Hawthorn,10,13,73,St Kilda,22,10,142,M.C.G.,-69,2022,Regular,4,R4-Hawthorn-St Kilda,St Kilda,-69,0.561013697450784,1,Hawthorn,56.1,$1.78,0
+16019,2022-04-10,4,Gold Coast,13,14,92,Carlton,8,14,62,Carrara,30,2022,Regular,4,R4-Gold Coast-Carlton,Gold Coast,30,0.555305794084779,1,Gold Coast,55.5,$1.8,1
