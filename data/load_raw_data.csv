@@ -15982,39 +15982,3 @@ Game,Date,Round,Home.Team,Home.Goals,Home.Behinds,Home.Points,Away.Team,Away.Goa
 15981,2021-09-10,PF,Melbourne,19,11,125,Geelong,6,6,42,Perth Stadium,83,2021,Finals,26
 15982,2021-09-11,PF,Port Adelaide,6,9,45,Footscray,17,14,116,Adelaide Oval,-71,2021,Finals,26
 15983,2021-09-25,GF,Melbourne,21,14,140,Footscray,10,6,66,Perth Stadium,74,2021,Finals,27
-15984,2022-03-16,R1,Melbourne,14,13,97,Western Bulldogs,11,5,71,M.C.G.,26,2022,Regular,1
-15985,2022-03-17,R1,Carlton,14,17,101,Richmond,11,10,76,M.C.G.,25,2022,Regular,1
-15986,2022-03-18,R1,St Kilda,12,13,85,Collingwood,15,12,102,Docklands,-17,2022,Regular,1
-15987,2022-03-19,R1,Geelong,20,18,138,Essendon,11,6,72,M.C.G.,66,2022,Regular,1
-15988,2022-03-19,R1,GWS,13,14,92,Sydney,17,10,112,Stadium Australia,-20,2022,Regular,1
-15989,2022-03-19,R1,Brisbane Lions,11,14,80,Port Adelaide,10,9,69,Gabba,11,2022,Regular,1
-15990,2022-03-20,R1,Hawthorn,11,12,78,North Melbourne,8,10,58,M.C.G.,20,2022,Regular,1
-15991,2022-03-20,R1,Adelaide,12,10,82,Fremantle,11,17,83,Adelaide Oval,-1,2022,Regular,1
-15992,2022-03-20,R1,West Coast,12,8,80,Gold Coast,16,11,107,Perth Stadium,-27,2022,Regular,1
-15993,2022-03-24,R2,Western Bulldogs,13,12,90,Carlton,16,6,102,Docklands,-12,2022,Regular,2
-15994,2022-03-25,R2,Sydney,17,5,107,Geelong,10,17,77,S.C.G.,30,2022,Regular,2
-15995,2022-03-26,R2,Collingwood,15,10,100,Adelaide,8,10,58,M.C.G.,42,2022,Regular,2
-15996,2022-03-26,R2,Essendon,10,15,75,Brisbane Lions,15,7,97,Docklands,-22,2022,Regular,2
-15997,2022-03-26,R2,Port Adelaide,7,14,56,Hawthorn,19,6,120,Adelaide Oval,-64,2022,Regular,2
-15998,2022-03-26,R2,Gold Coast,10,9,69,Melbourne,12,10,82,Carrara,-13,2022,Regular,2
-15999,2022-03-27,R2,North Melbourne,10,14,74,West Coast,8,11,59,Docklands,15,2022,Regular,2
-16000,2022-03-27,R2,Richmond,16,13,109,GWS,10,13,73,M.C.G.,36,2022,Regular,2
-16001,2022-03-27,R2,Fremantle,8,7,55,St Kilda,9,11,65,Perth Stadium,-10,2022,Regular,2
-16002,2022-03-31,R3,Western Bulldogs,9,17,71,Sydney,9,6,60,Docklands,11,2022,Regular,3
-16003,2022-04-01,R3,Melbourne,14,15,99,Essendon,10,10,70,M.C.G.,29,2022,Regular,3
-16004,2022-04-01,R3,Adelaide,15,6,96,Port Adelaide,13,14,92,Adelaide Oval,4,2022,Regular,3
-16005,2022-04-02,R3,GWS,12,11,83,Gold Coast,8,9,57,Sydney Showground,26,2022,Regular,3
-16006,2022-04-02,R3,Collingwood,13,13,91,Geelong,16,8,104,M.C.G.,-13,2022,Regular,3
-16007,2022-04-02,R3,Brisbane Lions,23,18,156,North Melbourne,7,6,48,Gabba,108,2022,Regular,3
-16008,2022-04-03,R3,Carlton,11,8,74,Hawthorn,11,7,73,M.C.G.,1,2022,Regular,3
-16009,2022-04-03,R3,St Kilda,18,9,117,Richmond,13,6,84,Docklands,33,2022,Regular,3
-16010,2022-04-03,R3,West Coast,7,5,47,Fremantle,15,12,102,Perth Stadium,-55,2022,Regular,3
-16011,2022-04-07,R4,Port Adelaide,4,12,36,Melbourne,10,8,68,Adelaide Oval,-32,2022,Regular,4
-16012,2022-04-08,R4,Geelong,11,14,80,Brisbane Lions,11,4,70,Kardinia Park,10,2022,Regular,4
-16013,2022-04-09,R4,Sydney,13,8,86,North Melbourne,12,3,75,S.C.G.,11,2022,Regular,4
-16014,2022-04-09,R4,Collingwood,10,14,74,West Coast,14,3,87,Docklands,-13,2022,Regular,4
-16015,2022-04-09,R4,Richmond,15,9,99,Western Bulldogs,7,19,61,M.C.G.,38,2022,Regular,4
-16016,2022-04-09,R4,Fremantle,13,10,88,GWS,8,6,54,Perth Stadium,34,2022,Regular,4
-16017,2022-04-10,R4,Essendon,15,13,103,Adelaide,15,9,99,Docklands,4,2022,Regular,4
-16018,2022-04-10,R4,Hawthorn,10,13,73,St Kilda,22,10,142,M.C.G.,-69,2022,Regular,4
-16019,2022-04-10,R4,Gold Coast,13,14,92,Carlton,8,14,62,Carrara,30,2022,Regular,4
