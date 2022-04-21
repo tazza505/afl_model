@@ -3,8 +3,10 @@ require(tidyverse)
 require(DT)
 require(plotly)
 
-this_yr <- team_elo_round %>% filter(season == max(season))
+team_elo_round <- loadGoogleData("team_elo_round")
 next_round_tips <- loadGoogleData("next_round_tip")
+
+this_yr <- team_elo_round %>% filter(season == max(season))
 
 latest_round <- max(next_round_tips$round)  
 latest_season <- max(team_elo_round$season)
