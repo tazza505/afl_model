@@ -1,6 +1,6 @@
 require(shiny)
 require(tidyverse)
-source("/Users/tazza1/Documents/r_projects/afl_model/google/google_sheets.R")
+source("google_sheets.R")
 
 team_elo_round <- loadGoogleData("team_elo_round")
 next_round_tips <- loadGoogleData("next_round_tip")
