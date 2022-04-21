@@ -23,3 +23,6 @@ final <- results %>%
   mutate(correct_tip = ifelse(actual_winner == tip, 1, 0)) 
 
 write_csv(final,"/Users/tazza1/Documents/r_projects/afl_model/data/tip_results.csv")
+
+sheet_write(final, ss = sheet_id, sheet = "tip_results")
+
