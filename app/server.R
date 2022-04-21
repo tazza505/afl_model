@@ -3,11 +3,11 @@ require(tidyverse)
 require(DT)
 require(plotly)
 
-team_elo_round <- read_csv("https://raw.githubusercontent.com/tazza505/afl_model/main/data/team_elo_round.csv")
 this_yr <- team_elo_round %>% filter(season == max(season))
-latest_round <- max(this_yr$round_number) + 1  #Elo updates to most recent round, excludes current
+next_round_tips <- loadGoogleData("next_round_tip")
+
+latest_round <- max(next_round_tips$round)  
 latest_season <- max(team_elo_round$season)
-load_latest_round_tips <- read_csv(paste0("https://raw.githubusercontent.com/tazza505/afl_model/main/predictions/",latest_season,"_round_",latest_round,".csv"))
 
 
 # Define server logic required to draw a histogram
@@ -15,8 +15,8 @@ shinyServer(function(input, output) {
 
     output$next_round_tips <- renderDataTable({
         
-        load_latest_round_tips %>% 
-        select(-c(X1, season, round, prediction_odds, prediction_outcome)) 
+      next_round_tips %>% 
+        select(-c(season, round, prediction_odds, prediction_outcome)) 
     }
     )
         

@@ -1,9 +1,12 @@
 require(shiny)
 require(tidyverse)
+source("/Users/tazza1/Documents/r_projects/afl_model/google/google_sheets.R")
 
-team_elo_round <- read_csv("https://raw.githubusercontent.com/tazza505/afl_model/main/data/team_elo_round.csv")
+team_elo_round <- loadGoogleData("team_elo_round")
+next_round_tips <- loadGoogleData("next_round_tip")
+
 this_yr <- team_elo_round %>% filter(season == max(season))
-latest_round <- max(this_yr$round_number) + 1  #Elo updates to most recent round, excludes current
+latest_round <- max(next_round_tips$round)  
 latest_season <- max(team_elo_round$season)
 
 # Define UI for application that draws a histogram
