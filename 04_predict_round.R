@@ -1,9 +1,5 @@
 #Script to run tipping model on the next round
-library(tidyverse)
-library(fitzRoy)
-library(janitor)
-source("/Users/tazza1/Documents/r_projects/afl_model/functions/distance_travelled_function.R")
-source("/Users/tazza1/Documents/r_projects/afl_model/functions/elo_functions.R")
+
 
 #Get the model coefficients
 model_coef <- read.csv("/Users/tazza1/Documents/r_projects/afl_model/data/model_coefficents.csv") 
@@ -56,7 +52,8 @@ clean_fixture <- load_fixture %>%
     venue_name == "Mars Stadium" ~ "Eureka Stadium",
     venue_name == "Blundstone Arena" ~ "Bellerive Oval",
     venue_name == "University of Tasmania Stadium" ~ "York Park",
-    venue_name == "Cazalys Stadium" ~ "Cazaly's Stadium")  
+    venue_name == "Cazalys Stadium" ~ "Cazaly's Stadium",
+    venue_name == "TIO Stadium" ~ "Marrara Oval")  
     ) %>% 
   mutate(
     home_team = case_when(
@@ -143,6 +140,7 @@ season <- max(next_round_tip$season)
 
 write.csv(next_round_tip, paste0("/Users/tazza1/Documents/r_projects/afl_model/predictions/", season, "_round_",round,".csv"))
 
+sheet_write(next_round_tip, ss = sheet_id, sheet = "next_round_tip")
 
 
 
