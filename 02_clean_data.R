@@ -1,7 +1,4 @@
-library("tidyverse")
-library("geosphere") #For distance calculations
-library("elo")
-source("functions/elo_functions.R")
+
 
 #
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_historical.csv")

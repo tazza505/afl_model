@@ -1,6 +1,3 @@
-library("fitzRoy")
-library("janitor")
-library("tidyverse")
 
 #Load 1897 to 2021 data
 load_raw_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/load_raw_data.csv")
@@ -45,7 +42,8 @@ load_2022 <- fetch_results(2022) %>%
     Venue == "Mars Stadium" ~ "Eureka Stadium",
     Venue == "Blundstone Arena" ~ "Bellerive Oval",
     Venue == "University of Tasmania Stadium" ~ "York Park",
-    Venue == "Cazalys Stadium" ~ "Cazaly's Stadium")  
+    Venue == "Cazalys Stadium" ~ "Cazaly's Stadium",
+    Venue == "TIO Stadium" ~ "Marrara Oval")  
   ) %>% 
   mutate(
     Home.Team = case_when(

@@ -1,5 +1,4 @@
-library(tidyverse)
-source("functions/elo_functions.R")
+
 
 # Script to create tipping model
 load_data <- read_csv("/Users/tazza1/Documents/r_projects/afl_model/data/afl_clean.csv") %>% 

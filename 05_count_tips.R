@@ -1,6 +1,3 @@
-library("tidyverse")
-library("vroom")
-
 #Script to count success of 2022 tips
 
 #Download 2022 results
